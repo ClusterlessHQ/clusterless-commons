@@ -6,6 +6,9 @@
 * file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
+extra["group"] = "io.clusterless"
+extra["version"] = "0.2"
+
 extra["repoUserName"] = System.getProperty("publish.repo.userName")
 extra["repoPassword"] = System.getProperty("publish.repo.password")
 

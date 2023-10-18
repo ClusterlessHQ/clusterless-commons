@@ -11,6 +11,9 @@ plugins {
     id("io.github.gradle-nexus.publish-plugin") version "2.0.0-rc-1"
 }
 
+group = extra["group"] as String
+version = extra["version"] as String
+
 nexusPublishing {
     repositories {
         sonatype {

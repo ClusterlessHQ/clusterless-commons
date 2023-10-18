@@ -9,6 +9,7 @@
 */
 
 plugins {
+    id("clusterless.commons.java-common-properties")
     java
 }
 
@@ -17,8 +18,8 @@ repositories {
     mavenCentral()
 }
 
-group = "io.clusterless"
-version = "0.2"
+group = extra["group"] as String
+version = extra["version"] as String
 
 dependencies {
     constraints {
