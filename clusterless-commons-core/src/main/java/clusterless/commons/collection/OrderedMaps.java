@@ -6,15 +6,24 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-package clusterless.commons.util;
+package clusterless.commons.collection;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
  * Is a duplicate of {@link Map#of()} but the order is retained.
+ * <p/>
+ * Retaining order is important with the CDK, if the key order changes between deployments, a new CloudFormation
+ * deployment will be triggered.
+ *
+ * @see Map#of()
  */
 public class OrderedMaps {
+    public static <K, V> Map<K, V> of() {
+        return new LinkedHashMap<>();
+    }
+
     public static <K, V> Map<K, V> of(K k1, V v1) {
         return new LinkedHashMap<>() {
             {

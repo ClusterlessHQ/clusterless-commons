@@ -15,9 +15,7 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 
 /**
- * Label simplifies creating complex strings used for naming, displays, and paths.
- * <p>
- * An Enum can be a Label by implementing {@link EnumPartition}.
+ * Partition is a Label that support a path like structure having name=value pairs.
  */
 public interface Partition {
     Pattern SEPARATOR_REGEX = Pattern.compile("^/+$");
@@ -286,7 +284,7 @@ public interface Partition {
 
     /**
      * Results in a path string, with a leading and trailing slash
-     * <p>
+     * <p/>
      * Unless object is not null, then results in a prefix string, with only a leading
      *
      * @return String /year=2023/month=12/ or /year=2023/month=12/file.txt

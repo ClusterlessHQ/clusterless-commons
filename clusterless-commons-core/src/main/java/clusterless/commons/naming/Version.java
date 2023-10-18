@@ -10,6 +10,9 @@ package clusterless.commons.naming;
 
 import java.util.Objects;
 
+/**
+ * Version is a {@link Fixed} value that represents a version.
+ */
 public class Version extends Fixed {
     public static Version of(String version) {
         Objects.requireNonNull(version, "version may not be null");

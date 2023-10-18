@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-package clusterless.commons.util;
+package clusterless.commons.collection;
 
 import java.util.ArrayList;
 import java.util.List;

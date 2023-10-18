@@ -12,8 +12,10 @@ import java.util.Objects;
 
 /**
  * Creates an identifier to use as an export/import key for provider output/export values.
- * <p>
- * * aws:stage:project:version:resourceType:resourceName:name
+ * <p/>
+ * <pre>
+ *   aws:stage:scope:scopeVersion:resourceType:resourceName:name
+ * </pre>
  */
 public final class Ref {
     public static Ref ref() {

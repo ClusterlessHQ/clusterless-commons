@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-package clusterless.commons.util;
+package clusterless.commons.collection;
 
 import java.util.Collection;
 import java.util.LinkedHashMap;
@@ -16,15 +16,45 @@ import java.util.function.Function;
 
 /**
  * Is a duplicate of {@link Map#of()} but the order is retained.
- * <p>
- * Also an entry will not be added if the value is null.
+ * <p/>
+ * Also, an entry will not be added if the value is null.
+ *
+ * @see OrderedMaps#of()
+ * @see Map#of()
  */
 public class OrderedSafeMaps {
 
+    /**
+     * Returns the result of the function if the intermediate value is not null, otherwise null.
+     *
+     * <pre>
+     *   OrderedSafeMap.of(
+     *     "value", ifPresent(name, String::toLowerCase)
+     *   );
+     * </pre>
+     *
+     * @param intermediate the value to test, if not null, pass the function
+     * @param function     the Function to apply to the intermediate value
+     * @return the result of the function or null if the intermediate value is null
+     */
     public static <I, V> V ifPresent(I intermediate, Function<I, V> function) {
         return ifPresent(intermediate, function, null);
     }
 
+    /**
+     * Returns the result of the function if the intermediate value is not null, otherwise other.
+     *
+     * <pre>
+     *   OrderedSafeMap.of(
+     *     "value", ifPresent(name, String::toLowerCase, "default")
+     *   );
+     * </pre>
+     *
+     * @param intermediate the value to test, if not other, pass the function
+     * @param function     the Function to apply to the intermediate value
+     * @param other        the default value if the intermediate value is null
+     * @return the result of the function if the intermediate value is not null, otherwise other
+     */
     public static <I, V> V ifPresent(I intermediate, Function<I, V> function, V other) {
         return Optional.ofNullable(intermediate).map(function).orElse(other);
     }
@@ -43,6 +73,10 @@ public class OrderedSafeMaps {
         }
 
         return v;
+    }
+
+    public static <K, V> Map<K, V> of() {
+        return new LinkedHashMap<>();
     }
 
     public static <K, V> Map<K, V> of(K k1, V v1) {

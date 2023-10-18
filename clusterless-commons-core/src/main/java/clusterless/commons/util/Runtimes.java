@@ -16,6 +16,9 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Optional;
 
+/**
+ * Runtimes provides a set of utilities for working with the current runtime.
+ */
 public class Runtimes {
     public static String choose(String mac, String win, String linux) {
         return switch (current()) {

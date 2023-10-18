@@ -13,9 +13,9 @@ import java.io.Serializable;
 /**
  * Fixed is a Label that retains the value formatting. It won't be coerced into camelCase or
  * an alternative text format.
- * <p>
+ * <p/>
  * Fixed can be subclassed to provide type values that may optionally have formatting rules.
- * <p>
+ * <p/>
  * It is also Serializable so that subclasses may be used as value types.
  */
 public class Fixed implements Label, Serializable {

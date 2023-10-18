@@ -21,7 +21,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- *
+ * Strings is a utility class for working with strings.
  */
 public class Strings {
     public static String joinCleanDash(Object... objects) {

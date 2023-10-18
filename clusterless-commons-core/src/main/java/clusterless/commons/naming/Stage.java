@@ -10,6 +10,9 @@ package clusterless.commons.naming;
 
 import java.util.Locale;
 
+/**
+ * Stage is a {@link Fixed} value that represents a stage of deployment.
+ */
 public class Stage extends Fixed {
     private static final Stage NULL_STAGE = new Stage(null);
 

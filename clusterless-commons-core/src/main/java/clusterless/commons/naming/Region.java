@@ -10,6 +10,9 @@ package clusterless.commons.naming;
 
 import java.util.Objects;
 
+/**
+ * Region is a {@link Fixed} value that represents an AWS region.
+ */
 public class Region extends Fixed {
     public static Region of(String region) {
         Objects.requireNonNull(region, "region may not be null");

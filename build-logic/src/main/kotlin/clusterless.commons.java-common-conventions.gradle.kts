@@ -28,9 +28,6 @@ dependencies {
         implementation("org.slf4j:slf4j-api:2.0.9")
 
         val log4j = "2.20.0"
-//        implementation("org.apache.logging.log4j:log4j-api:$log4j")
-//        implementation("org.apache.logging.log4j:log4j-core:$log4j")
-//        implementation("org.apache.logging.log4j:log4j-jul:$log4j")
         implementation("org.apache.logging.log4j:log4j-slf4j-impl:$log4j")
     }
 }

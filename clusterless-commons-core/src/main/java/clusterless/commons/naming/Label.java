@@ -16,8 +16,14 @@ import java.util.Objects;
 
 /**
  * Label simplifies creating complex strings used for naming, displays, and paths.
- * <p>
+ * <p/>
  * An Enum can be a Label by implementing {@link EnumLabel}.
+ *
+ * <pre>
+ *  Label.of("foo").with("bar").with("baz").camelCase() // "fooBarBaz"
+ *  Label.of("foo").with("bar").with("baz").lowerHyphen() // "foo-bar-baz"
+ *  Label.of("foo").with("barBar").with("baz").lowerHyphenPath() // "foo/bar-bar/baz"
+ * </pre>
  */
 public interface Label {
     /**
@@ -50,6 +56,12 @@ public interface Label {
         return value == null ? null : value.camelCase();
     }
 
+    /**
+     * Convert the given value to a Label.
+     *
+     * @param value the value to convert to a Label
+     * @return
+     */
     static Label of(Object value) {
         if (value == null) {
             return NULL;
@@ -86,10 +98,23 @@ public interface Label {
         return value.abbreviated(abbr);
     }
 
+    /**
+     * Convert the given value to a Label with an abbreviation.
+     *
+     * @param full the full name
+     * @param abbr the abbreviated name
+     * @return a Label instance
+     */
     static Label of(String full, String abbr) {
         return of(of(full), of(abbr));
     }
 
+    /**
+     * Convert the given value to a {@link Fixed} Label.
+     *
+     * @param fixed the value to fix the format of
+     * @return a Label instance
+     */
     static Label fixed(String fixed) {
         return new Fixed(fixed);
     }
@@ -113,6 +138,11 @@ public interface Label {
         };
     }
 
+    /**
+     * Return a Label instance with the value to upper case.
+     *
+     * @return a Label instance
+     */
     default Label upperOnly() {
         return new Fixed(Label.this.camelCase() != null ? Label.this.camelCase().toUpperCase(Locale.ROOT) : null);
     }
@@ -133,24 +163,62 @@ public interface Label {
         return () -> Strings.upperCamel(value);
     }
 
+    /**
+     * Convert the given value in lower hyphen format to a Label.
+     *
+     * @param value in lower hyphen format
+     * @return a Label instance
+     */
     static Label fromLowerHyphen(String value) {
         return () -> Strings.lowerHyphenToUpperCamel(value);
     }
 
+    /**
+     * Convert the given value in lower underscore format to a Label.
+     *
+     * @param value in lower underscore format
+     * @return a Label instance
+     */
     static Label fromLowerUnderscore(String value) {
         return () -> Strings.lowerUnderscoreToCamelCase(value);
     }
 
+    /**
+     * Return true if the Label is a "null" Label.
+     *
+     * @return true if the Label is a "null" Label
+     */
     default boolean isNull() {
         return camelCase() == null;
     }
 
+    /**
+     * Return a Label that concatenates the given values.
+     *
+     * @param values the values to concatenate
+     * @return
+     */
     default Label having(String... values) {
         return Arrays.stream(values)
                 .map(Label::of)
                 .reduce(this, Label::with);
     }
 
+    /**
+     * Return a Label that concatenates the given value.
+     * <p/>
+     * This method accepts a Label or an Object which is converted to a String before concatenation.
+     * <p>
+     * Use this method to build reusable Labels.
+     *
+     * <pre>
+     *     Label end = Label.of("endOfLabel");
+     *     Label label = Label.of("foo").with("bar").with("baz").with(scope);
+     * </pre>
+     *
+     * @param object the value to concatenate
+     * @return a Label instance
+     */
     default Label with(Object object) {
         if (object == null) {
             return this;
@@ -229,6 +297,12 @@ public interface Label {
         };
     }
 
+    /**
+     * Return the given Label if it does not represent "null" otherwise return this instance.
+     *
+     * @param label the Label to return if not null
+     * @return the given Label if not null otherwise this instance
+     */
     default Label thisIfNull(Label label) {
         if (label == null || label.isNull()) {
             return this;
@@ -237,57 +311,119 @@ public interface Label {
         return label;
     }
 
+    /**
+     * Return a String that concatenates all the nested Label instances into a camel case formatted String.
+     *
+     * @return a camel case formatted String
+     */
     String camelCase();
 
+    /**
+     * If provided, the abbreviated version of the Label.
+     *
+     * @return the abbreviated version of the Label
+     */
     default Label abbreviated() {
         return Label.this::camelCase;
     }
 
     /**
-     * Should always be a short version of Camel Case
+     * Returns an abbreviated version of the Label in camel case format.
      *
-     * @return
+     * @return an abbreviated version of the Label in camel case format
      */
     default String shortCamelCase() {
         return abbreviated().camelCase();
     }
 
+    /**
+     * Returns a lower camel case formatted String.
+     *
+     * @return a lower camel case formatted String
+     */
     default String lowerCamelCase() {
         return Strings.camelToLowerCamel(camelCase());
     }
 
+    /**
+     * Returns a lower colon path formatted String.
+     *
+     * @return a lower colon path formatted String
+     */
     default String lowerColonPath() {
         return Strings.camelToLowerHyphen(camelCase());
     }
 
+    /**
+     * Returns a lower hyphen formatted String.
+     *
+     * @return a lower hyphen formatted String
+     */
     default String lowerHyphen() {
         return Strings.camelToLowerHyphen(camelCase());
     }
 
+    /**
+     * Returns a lower hyphen formatted String with slash delimiters.
+     *
+     * @return a lower hyphen formatted String with slash delimiters
+     */
     default String lowerHyphenPath() {
         return Strings.camelToLowerHyphen(camelCase());
     }
 
+    /**
+     * Returns a lower hyphen formatted String with slash delimiters.
+     *
+     * @param trailingSlash if true, a trailing slash is appended
+     * @return a lower hyphen formatted String with slash delimiters
+     */
     default String lowerHyphenPath(boolean trailingSlash) {
         return trailingSlash ? lowerHyphenPath().concat("/") : lowerHyphenPath();
     }
 
+    /**
+     * Returns a lower underscore formatted String.
+     *
+     * @return a lower underscore formatted String
+     */
     default String lowerUnderscore() {
         return Strings.camelToLowerUnderscore(camelCase());
     }
 
+    /**
+     * Returns an upper underscore formatted String.
+     *
+     * @return an upper underscore formatted String
+     */
     default String upperUnderscore() {
         return Strings.camelToUpperUnderscore(camelCase());
     }
 
+    /**
+     * Returns an abbreviated lower hyphen formatted String.
+     *
+     * @return an abbreviated  lower hyphen formatted String
+     */
     default String shortLowerHyphen() {
         return Strings.camelToLowerHyphen(shortCamelCase());
     }
 
+    /**
+     * Returns an abbreviated lower underscore formatted String.
+     *
+     * @return an abbreviated lower underscore formatted String
+     */
     default String shortLowerUnderscore() {
         return Strings.camelToLowerUnderscore(shortCamelCase());
     }
 
+    /**
+     * Compares the given Label to this Label using camel case formatted Strings.
+     *
+     * @param o the Label to compare to
+     * @return a negative integer, zero, or a positive integer as this Label is less than, equal to, or greater than the specified Label.
+     */
     default int compareTo(Label o) {
         return Objects.compare(camelCase(), o.camelCase(), String::compareTo);
     }

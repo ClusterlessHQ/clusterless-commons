@@ -10,15 +10,16 @@ package clusterless.commons.substrate.aws.cdk.construct;
 
 import clusterless.commons.naming.Label;
 import clusterless.commons.naming.Ref;
+import clusterless.commons.substrate.aws.cdk.scoped.ScopedConstruct;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import software.amazon.awscdk.CfnOutput;
 import software.amazon.awscdk.CfnOutputProps;
 import software.constructs.Construct;
 
-public class OutputConstruct extends Construct {
-    private static final Logger LOG = LoggerFactory.getLogger(OutputConstruct.class);
+/**
+ * Creates a CloudFormation Output for a given Construct and a {@link Ref} used to name the export.
+ */
+public class OutputConstruct extends ScopedConstruct {
     private final String exportName;
 
     public OutputConstruct(@NotNull Construct construct, Ref ref, String value, String description) {
@@ -33,8 +34,6 @@ public class OutputConstruct extends Construct {
 
     protected String createOutputFor(Ref ref, String value, String description) {
         String exportName = ref.exportName();
-
-        LOG.info("creating output for: {}", exportName);
 
         new CfnOutput(this, ref.resourceLabel().camelCase(), new CfnOutputProps.Builder()
                 .exportName(exportName)

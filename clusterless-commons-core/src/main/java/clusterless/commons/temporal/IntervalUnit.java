@@ -17,11 +17,11 @@ import static java.time.temporal.ChronoUnit.MINUTES;
 
 /**
  * Breaks a day into the number of intervals requested.
- * <p>
+ * <p/>
  * Fourths is a 15-minute duration, there are 4 Fourths in an hour, and 96 Fourths in a day.
- * <p>
+ * <p/>
  * Sixths is a 10-minute duration, there are 6 Sixths in an hour, and 144 Sixths in a day.
- * <p>
+ * <p/>
  * Twelfths is a 5-minute duration, there are 12 Twelfths in an hour, and 288 Twelfth in a day.
  */
 public enum IntervalUnit implements TemporalUnit {

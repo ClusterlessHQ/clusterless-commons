@@ -60,15 +60,15 @@ public enum IntervalField implements TemporalField {
 
     /**
      * Gets the range of valid values for the field.
-     * <p>
+     * <p/>
      * All fields can be expressed as a {@code long} integer.
      * This method returns an object that describes the valid range for that value.
-     * <p>
+     * <p/>
      * This method returns the range of the field in the ISO-8601 calendar system.
      * This range may be incorrect for other calendar systems.
      * Use {@link Chronology#range(ChronoField)} to access the correct range
      * for a different calendar system.
-     * <p>
+     * <p/>
      * Note that the result only describes the minimum and maximum valid values
      * and it is important not to read too much into them. For example, there
      * could be values within the range that are invalid for the field.
@@ -84,7 +84,7 @@ public enum IntervalField implements TemporalField {
 
     /**
      * Checks if this field represents a component of a date.
-     * <p>
+     * <p/>
      * Fields from day-of-week to era are date-based.
      *
      * @return true if it is a component of a date
@@ -96,7 +96,7 @@ public enum IntervalField implements TemporalField {
 
     /**
      * Checks if this field represents a component of a time.
-     * <p>
+     * <p/>
      * Fields from nano-of-second to am-pm-of-day are time-based.
      *
      * @return true if it is a component of a time
@@ -110,10 +110,10 @@ public enum IntervalField implements TemporalField {
 
     /**
      * Checks that the specified value is valid for this field.
-     * <p>
+     * <p/>
      * This validates that the value is within the outer range of valid values
      * returned by {@link #range()}.
-     * <p>
+     * <p/>
      * This method checks against the range of the field in the ISO-8601 calendar system.
      * This range may be incorrect for other calendar systems.
      * Use {@link Chronology#range(ChronoField)} to access the correct range
@@ -128,11 +128,11 @@ public enum IntervalField implements TemporalField {
 
     /**
      * Checks that the specified value is valid and fits in an {@code int}.
-     * <p>
+     * <p/>
      * This validates that the value is within the outer range of valid values
      * returned by {@link #range()}.
      * It also checks that all valid values are within the bounds of an {@code int}.
-     * <p>
+     * <p/>
      * This method checks against the range of the field in the ISO-8601 calendar system.
      * This range may be incorrect for other calendar systems.
      * Use {@link Chronology#range(ChronoField)} to access the correct range
