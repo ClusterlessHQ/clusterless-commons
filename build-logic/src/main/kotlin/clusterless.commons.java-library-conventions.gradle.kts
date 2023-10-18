@@ -18,9 +18,6 @@ plugins {
 dependencies {
     implementation("org.jetbrains:annotations")
     implementation("com.google.guava:guava")
-
-    api("org.slf4j:slf4j-api")
-    runtimeOnly("org.apache.logging.log4j:log4j-slf4j-impl")
 }
 
 publishing {

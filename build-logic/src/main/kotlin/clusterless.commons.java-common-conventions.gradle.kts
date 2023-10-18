@@ -25,11 +25,6 @@ dependencies {
     constraints {
         implementation("org.jetbrains:annotations:24.0.0")
         implementation("com.google.guava:guava:31.1-jre")
-
-        implementation("org.slf4j:slf4j-api:2.0.9")
-
-        val log4j = "2.20.0"
-        implementation("org.apache.logging.log4j:log4j-slf4j-impl:$log4j")
     }
 }
 
