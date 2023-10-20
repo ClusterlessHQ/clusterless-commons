@@ -14,7 +14,24 @@ import java.util.Objects;
  * Creates an identifier to use as an export/import key for provider output/export values.
  * <p/>
  * <pre>
- *   aws:stage:scope:scopeVersion:resourceType:resourceName:name
+ * aws:qualifier:[stage:]scopeName:scopeVersion:resourceNS:resourceType:resourceName
+ * </pre>
+ * <p/>
+ * Where the qualifier represents the type of value being exported/imported:
+ * - id
+ * - name
+ * - arn
+ * <p/>
+ * Where stage is the stage of the deployment, such as dev, test, prod, etc. It is optional.
+ * <p/>
+ * scopeName and scopeVersion are analogous to project names and versions.
+ * <p/>
+ * Resources are identified by a namespace, type, and name.
+ * <p/>
+ *
+ * <pre>
+ *   ref:aws:id:project-a:20230101:core:compute:spot
+ *   ref:aws:id:dev:project-a:20230101:core:compute:spot
  * </pre>
  */
 public final class Ref {

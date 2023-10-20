@@ -11,12 +11,15 @@ package clusterless.commons.temporal;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
+import java.time.temporal.TemporalUnit;
 
 import static clusterless.commons.temporal.IntervalField.*;
 import static java.time.temporal.ChronoField.*;
 
 /**
+ * IntervalDateTimeFormatter provided formatters for the {@link IntervalUnit} units.
  *
+ * See {@link IntervalUnits#formatter(TemporalUnit)} for looking up an appropriate formatter.
  */
 public class IntervalDateTimeFormatter {
     public static final DateTimeFormatter FOURTH_FORMATTER;

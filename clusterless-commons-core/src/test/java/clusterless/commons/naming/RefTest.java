@@ -14,17 +14,32 @@ import org.junit.jupiter.api.Test;
 public class RefTest {
     @Test
     void name() {
-
         Label label = new Ref()
                 .withProvider("aws")
-                .withScope("bootstrap")
+                .withQualifier(Ref.Qualifier.Id)
+                .withScope("projectA")
                 .withScopeVersion("20230101")
                 .withResourceNs("core")
                 .withResourceType("compute")
                 .withResourceName("spot")
-                .withQualifier(Ref.Qualifier.Id)
                 .label();
 
-        Assertions.assertEquals("ref:aws:id:bootstrap:20230101:core:compute:spot", label.lowerColonPath());
+        Assertions.assertEquals("ref:aws:id:project-a:20230101:core:compute:spot", label.lowerColonPath());
+    }
+
+    @Test
+    void staged() {
+        Label label = new Ref()
+                .withProvider("aws")
+                .withStage(Stage.of("dev"))
+                .withQualifier(Ref.Qualifier.Id)
+                .withScope("projectA")
+                .withScopeVersion("20230101")
+                .withResourceNs("core")
+                .withResourceType("compute")
+                .withResourceName("spot")
+                .label();
+
+        Assertions.assertEquals("ref:aws:id:dev:project-a:20230101:core:compute:spot", label.lowerColonPath());
     }
 }
