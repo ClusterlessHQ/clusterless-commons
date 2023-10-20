@@ -21,11 +21,11 @@ names must be unique to a region, account, or globally.
 The Label class is for making labels, String for use in different contexts.
 
 ```java
-Label id=Label.of("project").with("version");
+Label id = Label.of("project").with("version");
 
-        id.camelCase(); // projectVersion
-        id.lowerHyphen(); // project-version
-        id.lowerColonPath(); // project:version
+id.camelCase(); // projectVersion
+id.lowerHyphen(); // project-version
+id.lowerColonPath(); // project:version
 ```
 
 There are a few flavors of Label:
@@ -33,10 +33,10 @@ There are a few flavors of Label:
 - [Fixed](clusterless-commons-core/src/main/java/clusterless/commons/naming/Fixed.java) - retains the original value
 - [Partition](clusterless-commons-core/src/main/java/clusterless/commons/naming/Partition.java) - allows for key=value
   pairs within each path element
-- [Region](clusterless-commons-core/src/main/java/clusterless/commons/naming/Region.java) - for use in AWS regions
-- [Stage](clusterless-commons-core/src/main/java/clusterless/commons/naming/Stage.java) - for use to label deployment
+- [Region](clusterless-commons-core/src/main/java/clusterless/commons/naming/Region.java) - for declaring AWS regions
+- [Stage](clusterless-commons-core/src/main/java/clusterless/commons/naming/Stage.java) - for declaring deployment
   stages
-- [Version](clusterless-commons-core/src/main/java/clusterless/commons/naming/Version.java) - for use to label versions
+- [Version](clusterless-commons-core/src/main/java/clusterless/commons/naming/Version.java) - for declaring versions
 
 `Label` is an interface that can be implemented by specialized classes. Use `Label.EnumLabel` to create label enums.
 
