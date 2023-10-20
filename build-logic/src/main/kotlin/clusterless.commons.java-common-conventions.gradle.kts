@@ -46,13 +46,18 @@ java {
     withSourcesJar()
 }
 
-var copyright = "Copyright &#169; 2023 <a href=\"https://chris.wensel.net/\">Chris K Wensel</a>. All Rights Reserved."
+var copyright =
+    """
+        |Copyright &#169; 2023 <a href="https://chris.wensel.net/" target="_blank">Chris K Wensel</a>. All Rights Reserved.
+        |&nbsp;A <a href="https://github.com/ClusterlessHQ" target="_blank">ClusterlessHQ</a> project.
+    """.trimMargin()
 
 tasks.named<Javadoc>("javadoc") {
-    title = "Clusterless Commons"
+    title = "Clusterless Commons ${project.version} API"
     isFailOnError = false
 
     options.encoding = "UTF8"
+    (options as StandardJavadocDocletOptions).linkSource(true)
     (options as StandardJavadocDocletOptions).addBooleanOption("html5", true)
     (options as StandardJavadocDocletOptions).bottom("<i>${copyright}</i>")
 }
