@@ -6,9 +6,15 @@
 
 A set of Java APIs for building cloud based applications.
 
+- `clusterless-commons-core` - Utilities and helpers for consistent naming and temporal operations.
+- `clusterless-commons-aws` - Utilities and base Constructs for AWS CDK applications.
+
 ## Core
 
 ### Naming
+
+Consistent, human-readable, names are important for usability and maintainability of cloud applications. In many cases
+names must be unique to a region, account, or globally.
 
 #### Label
 
@@ -84,7 +90,8 @@ prevent a deployment from being unnecessarily triggered.
 
 ## AWS
 
-This module provides a few AWS specific related classes.
+This module provides AWS specific related classes centered around simplifying the naming, exporting, and tagging of
+resources.
 
 ### Naming
 
