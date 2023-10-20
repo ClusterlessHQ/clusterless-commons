@@ -54,8 +54,31 @@ public class ScopedStack extends Stack {
         stage = app.stage();
     }
 
+    /**
+     * The {@link Stage} of the {@link ScopedApp} that this construct is scoped to.
+     *
+     * @return the {@link Stage} of the {@link ScopedApp} that this construct is scoped to.
+     */
     public Stage stage() {
         return stage;
+    }
+
+    /**
+     * The name of the {@link ScopedApp} that this construct is scoped to.
+     *
+     * @return the name of the {@link ScopedApp} that this construct is scoped to.
+     */
+    protected Label scopedName() {
+        return ScopedApp.scopedOf(this).name();
+    }
+
+    /**
+     * The version of the {@link ScopedApp} that this construct is scoped to.
+     *
+     * @return the version of the {@link ScopedApp} that this construct is scoped to.
+     */
+    protected Version scopedVersion() {
+        return ScopedApp.scopedOf(this).version();
     }
 
     protected void addNameRefFor(Ref ref, String value, String description) {

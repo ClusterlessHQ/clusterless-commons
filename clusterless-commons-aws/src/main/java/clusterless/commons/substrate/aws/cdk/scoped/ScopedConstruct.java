@@ -8,7 +8,10 @@
 
 package clusterless.commons.substrate.aws.cdk.scoped;
 
+import clusterless.commons.naming.Label;
 import clusterless.commons.naming.Ref;
+import clusterless.commons.naming.Stage;
+import clusterless.commons.naming.Version;
 import clusterless.commons.substrate.aws.cdk.naming.ArnRefs;
 import org.jetbrains.annotations.NotNull;
 import software.constructs.Construct;
@@ -23,6 +26,33 @@ import java.util.function.Function;
 public class ScopedConstruct extends Construct {
     public ScopedConstruct(@NotNull Construct scope, @NotNull String id) {
         super(scope, id);
+    }
+
+    /**
+     * The {@link Stage} of the {@link ScopedApp} that this construct is scoped to.
+     *
+     * @return the {@link Stage} of the {@link ScopedApp} that this construct is scoped to.
+     */
+    protected Stage stage() {
+        return ScopedApp.scopedOf(this).stage();
+    }
+
+    /**
+     * The name of the {@link ScopedApp} that this construct is scoped to.
+     *
+     * @return the name of the {@link ScopedApp} that this construct is scoped to.
+     */
+    protected Label scopedName() {
+        return ScopedApp.scopedOf(this).name();
+    }
+
+    /**
+     * The version of the {@link ScopedApp} that this construct is scoped to.
+     *
+     * @return the version of the {@link ScopedApp} that this construct is scoped to.
+     */
+    protected Version scopedVersion() {
+        return ScopedApp.scopedOf(this).version();
     }
 
     protected void addArnRefFor(Ref ref, Construct construct, String value, String description) {
