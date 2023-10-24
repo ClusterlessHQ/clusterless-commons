@@ -7,7 +7,7 @@
 */
 
 extra["group"] = "io.clusterless"
-extra["version"] = "0.5"
+extra["version"] = "0.6"
 
 extra["repoUserName"] = System.getProperty("publish.repo.userName")
 extra["repoPassword"] = System.getProperty("publish.repo.password")
