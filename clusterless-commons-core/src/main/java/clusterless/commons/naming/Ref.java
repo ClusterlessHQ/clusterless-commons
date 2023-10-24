@@ -59,27 +59,27 @@ public final class Ref {
         return value != null ? value.split(":")[1] : null;
     }
 
-    final Label provider;
+    final Fixed provider;
     final Qualifier qualifier;
     final Stage stage;
-    final Label scope;
-    final Fixed scopeVersion;
-    final Label resourceNs;
+    final Fixed scope;
+    final Version scopeVersion;
+    final Fixed resourceNs;
     final Fixed resourceType;
-    final Label resourceName;
+    final Fixed resourceName;
 
     public Ref() {
-        provider = null;
-        stage = Stage.nullStage();
-        scope = null;
-        scopeVersion = null;
-        resourceNs = null;
-        resourceType = null;
-        resourceName = null;
+        provider = Fixed.fixedNull();
         qualifier = null;
+        stage = Stage.nullStage();
+        scope = Fixed.fixedNull();
+        scopeVersion = Version.versionNull();
+        resourceNs = Fixed.fixedNull();
+        resourceType = Fixed.fixedNull();
+        resourceName = Fixed.fixedNull();
     }
 
-    private Ref(Label provider, Qualifier qualifier, Stage stage, Label scope, Fixed scopeVersion, Label resourceNs, Fixed resourceType, Label resourceName) {
+    private Ref(Fixed provider, Qualifier qualifier, Stage stage, Fixed scope, Version scopeVersion, Fixed resourceNs, Fixed resourceType, Fixed resourceName) {
         this.provider = provider;
         this.qualifier = qualifier;
         this.stage = stage == null ? Stage.nullStage() : stage.asLower();
@@ -96,6 +96,11 @@ public final class Ref {
     }
 
     public Ref withProvider(Label provider) {
+        Objects.requireNonNull(provider);
+        return withProvider(Fixed.of(provider.lowerHyphen()));
+    }
+
+    public Ref withProvider(Fixed provider) {
         Label.requireNonEmpty(provider);
         return new Ref(provider, qualifier, stage, scope, scopeVersion, resourceNs, resourceType, resourceName);
     }
@@ -109,14 +114,22 @@ public final class Ref {
     }
 
     public Ref withScope(Label scope) {
+        return withScope(Fixed.of(scope.lowerHyphen()));
+    }
+
+    public Ref withScope(Fixed scope) {
         return new Ref(provider, qualifier, stage, scope, scopeVersion, resourceNs, resourceType, resourceName);
     }
 
     public Ref withScopeVersion(String scopeVersion) {
-        return withScopeVersion(Fixed.of(scopeVersion));
+        return withScopeVersion(Version.of(scopeVersion));
     }
 
     public Ref withScopeVersion(Fixed scopeVersion) {
+        return withScopeVersion(Version.of(scopeVersion.lowerHyphen()));
+    }
+
+    public Ref withScopeVersion(Version scopeVersion) {
         return new Ref(provider, qualifier, stage, scope, scopeVersion, resourceNs, resourceType, resourceName);
     }
 
@@ -125,11 +138,19 @@ public final class Ref {
     }
 
     public Ref withResourceNs(Label resourceNs) {
+        return withResourceNs(Fixed.of(resourceNs.lowerHyphen()));
+    }
+
+    public Ref withResourceNs(Fixed resourceNs) {
         return new Ref(provider, qualifier, stage, scope, scopeVersion, resourceNs, resourceType, resourceName);
     }
 
     public Ref withResourceType(String resourceType) {
-        return withResourceType(Fixed.of(resourceType));
+        return withResourceType(Label.of(resourceType));
+    }
+
+    public Ref withResourceType(Label resourceType) {
+        return withResourceType(Fixed.of(resourceType.lowerHyphen()));
     }
 
     public Ref withResourceType(Fixed resourceType) {
@@ -141,6 +162,10 @@ public final class Ref {
     }
 
     public Ref withResourceName(Label resourceName) {
+        return withResourceName(Fixed.of(resourceName.lowerHyphen()));
+    }
+
+    public Ref withResourceName(Fixed resourceName) {
         return new Ref(provider, qualifier, stage, scope, scopeVersion, resourceNs, resourceType, resourceName);
     }
 
@@ -156,7 +181,7 @@ public final class Ref {
         return stage;
     }
 
-    public Label scope() {
+    public Fixed scope() {
         return scope;
     }
 
@@ -164,7 +189,7 @@ public final class Ref {
         return scopeVersion;
     }
 
-    public Label resourceNs() {
+    public Fixed resourceNs() {
         return resourceNs;
     }
 
@@ -172,7 +197,7 @@ public final class Ref {
         return resourceType;
     }
 
-    public Label resourceName() {
+    public Fixed resourceName() {
         return resourceName;
     }
 
@@ -207,7 +232,7 @@ public final class Ref {
                 .with(scope)
                 .with(scopeVersion)
                 .with(resourceNs)
-                .with(Label.of(resourceType.value()))
+                .with(resourceType)
                 .with(resourceName);
     }
 
@@ -226,7 +251,15 @@ public final class Ref {
 
     @Override
     public String toString() {
-        return exportName();
+        return Label.of("ref")
+                .with(provider)
+                .with(qualifier)
+                .with(stage)
+                .with(scope)
+                .with(scopeVersion)
+                .with(resourceNs)
+                .with(resourceType)
+                .with(resourceName).lowerColonPath();
     }
 
     @Override

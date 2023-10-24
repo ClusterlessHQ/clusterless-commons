@@ -120,6 +120,19 @@ public class LabelTest {
     }
 
     @Test
+    void stringWithFixedWithBecome() {
+        Label with = Label.fixed("ab-cd-1").with(Label.of("case"));
+        Assertions.assertEquals("ab-cd-1Case", with.camelCase());
+        Assertions.assertEquals("ab-cd-1-case", with.lowerHyphen());
+        Assertions.assertEquals("ab-cd-1/case", with.lowerHyphenPath());
+        Assertions.assertEquals("ab-cd-1/case/", with.lowerHyphenPath(true));
+        Assertions.assertEquals("ab-cd-1_case", with.lowerUnderscore());
+
+        with = with.becomeLabel();
+        Assertions.assertEquals("AbCd1Case", with.camelCase());
+    }
+
+    @Test
     void having() {
         Label with = Label.of("lower").having("one", "two", "three");
 

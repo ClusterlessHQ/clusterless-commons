@@ -147,6 +147,18 @@ public interface Label {
         return new Fixed(Label.this.camelCase() != null ? Label.this.camelCase().toUpperCase(Locale.ROOT) : null);
     }
 
+    /**
+     * Forces the underlying label components to be a single CamelCase Label, even if the components are Fixed.
+     * <p>
+     * Use when a Fixed component was passed, but the resulting String should have consistent formatting across all
+     * components.
+     *
+     * @return a Label instance
+     */
+    default Label becomeLabel() {
+        return of(this.camelCase());
+    }
+
     private static Label of(String value) {
         if (value == null) {
             return NULL;
@@ -288,6 +300,11 @@ public interface Label {
             @Override
             public String shortLowerUnderscore() {
                 return String.format("%s_%s", Label.this.shortLowerUnderscore(), label.shortLowerUnderscore());
+            }
+
+            @Override
+            public Label becomeLabel() {
+                return Label.this.becomeLabel().with(label.becomeLabel());
             }
 
             @Override

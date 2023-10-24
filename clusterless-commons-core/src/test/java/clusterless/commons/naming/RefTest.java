@@ -28,6 +28,21 @@ public class RefTest {
     }
 
     @Test
+    void nameWithRegion() {
+        Label label = new Ref()
+                .withProvider("aws")
+                .withQualifier(Ref.Qualifier.Id)
+                .withScope("projectA")
+                .withScopeVersion("20230101")
+                .withResourceNs("core")
+                .withResourceType("compute")
+                .withResourceName(Label.of("spot").with(Region.of("us-east-1")))
+                .label();
+
+        Assertions.assertEquals("ref:aws:id:project-a:20230101:core:compute:spot-us-east-1", label.lowerColonPath());
+    }
+
+    @Test
     void staged() {
         Label label = new Ref()
                 .withProvider("aws")

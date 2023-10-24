@@ -14,12 +14,19 @@ import java.util.Objects;
  * Version is a {@link Fixed} value that represents a version.
  */
 public class Version extends Fixed {
+    private static final Version NULL_VERSION = new Version(null);
+
     public static Version of(String version) {
         Objects.requireNonNull(version, "version may not be null");
         return new Version(version);
     }
 
+    public static Version versionNull() {
+        return NULL_VERSION;
+    }
+
     protected Version(String value) {
         super(value);
     }
+
 }

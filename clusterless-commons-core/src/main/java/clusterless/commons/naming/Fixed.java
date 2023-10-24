@@ -14,6 +14,10 @@ import java.io.Serializable;
  * Fixed is a Label that retains the value formatting. It won't be coerced into camelCase or
  * an alternative text format.
  * <p/>
+ * <pre>
+ * Fixed.of("UPPER").with("Case").camelCase() == "UPPERCase";
+ * </pre>
+ * <p/>
  * Fixed can be subclassed to provide type values that may optionally have formatting rules.
  * <p/>
  * It is also Serializable so that subclasses may be used as value types.
