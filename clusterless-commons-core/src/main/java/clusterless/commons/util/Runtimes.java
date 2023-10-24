@@ -21,11 +21,16 @@ import java.util.Optional;
  */
 public class Runtimes {
     public static String choose(String mac, String win, String linux) {
-        return switch (current()) {
-            case mac -> mac;
-            case win -> win;
-            case linux -> linux;
-        };
+        switch (current()) {
+            case mac:
+                return mac;
+            case win:
+                return win;
+            case linux:
+                return linux;
+            default:
+                throw new IllegalArgumentException();
+        }
 
     }
 

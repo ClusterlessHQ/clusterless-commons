@@ -9,6 +9,8 @@ A set of Java APIs for building cloud based applications.
 - `clusterless-commons-core` - Utilities and helpers for consistent naming and temporal operations.
 - `clusterless-commons-aws` - Utilities and base Constructs for AWS CDK applications.
 
+For use with JDK 11+.
+
 ## Core
 
 ### Naming
