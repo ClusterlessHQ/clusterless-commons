@@ -8,7 +8,10 @@
 
 package clusterless.commons.naming;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Creates an identifier to use as an export/import key for provider output/export values.
@@ -55,8 +58,20 @@ public final class Ref {
         return value != null && value.startsWith("ref:");
     }
 
-    public static String provider(String value) {
-        return value != null ? value.split(":")[1] : null;
+    public static Optional<Qualifier> qualifier(String value) {
+        if (!isRef(value)) {
+            return Optional.empty();
+        }
+
+        return Qualifier.lookup(value.split(":")[2]);
+    }
+
+    public static Optional<String> provider(String value) {
+        if (!isRef(value)) {
+            return Optional.empty();
+        }
+
+        return Optional.ofNullable(value.split(":")[1]);
     }
 
     final Fixed provider;
@@ -279,5 +294,21 @@ public final class Ref {
         Name,
         Id,
         Arn;
+
+        static final Map<String, Qualifier> map = new HashMap<>() {
+            {
+                put(Name.lowerHyphen(), Name);
+                put(Id.lowerHyphen(), Id);
+                put(Arn.lowerHyphen(), Arn);
+            }
+        };
+
+        public static Optional<Qualifier> lookup(String value) {
+            if (value == null) {
+                return null;
+            }
+
+            return Optional.ofNullable(map.get(value.toLowerCase()));
+        }
     }
 }

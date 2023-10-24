@@ -12,16 +12,15 @@ import clusterless.commons.naming.Label;
 import clusterless.commons.naming.Ref;
 import clusterless.commons.naming.Stage;
 import clusterless.commons.naming.Version;
+import clusterless.commons.substrate.aws.cdk.naming.ArnRefs;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.amazon.awscdk.App;
 import software.amazon.awscdk.AppProps;
 import software.constructs.Construct;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -74,6 +73,18 @@ public class ScopedApp extends App {
 
     public Construct resolveRef(Ref ref) {
         return refConstructs.get(ref);
+    }
+
+    public <T> T resolveArnRef(String ref, Function<String, T> resolver) {
+        Construct construct = resolveRef(ref);
+
+        if (construct != null) {
+            return (T) construct;
+        }
+
+        Optional<String> arn = ArnRefs.resolveArn(this, ref);
+
+        return resolver.apply(arn.orElseThrow(() -> new IllegalArgumentException("ref or arn are required" + ref)));
     }
 
     public Construct resolveRef(String relativeTypeRef) {

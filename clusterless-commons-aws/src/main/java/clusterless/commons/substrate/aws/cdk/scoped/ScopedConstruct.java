@@ -12,11 +12,9 @@ import clusterless.commons.naming.Label;
 import clusterless.commons.naming.Ref;
 import clusterless.commons.naming.Stage;
 import clusterless.commons.naming.Version;
-import clusterless.commons.substrate.aws.cdk.naming.ArnRefs;
 import org.jetbrains.annotations.NotNull;
 import software.constructs.Construct;
 
-import java.util.Optional;
 import java.util.function.Function;
 
 /**
@@ -70,14 +68,6 @@ public class ScopedConstruct extends Construct {
     }
 
     protected <T> T resolveArnRef(String ref, Function<String, T> resolver) {
-        Construct construct = ScopedApp.scopedOf(this).resolveRef(ref);
-
-        if (construct != null) {
-            return (T) construct;
-        }
-
-        Optional<String> arn = ArnRefs.resolveArn(this, ref);
-
-        return resolver.apply(arn.orElseThrow(() -> new IllegalArgumentException("ref or arn are required" + ref)));
+        return ScopedApp.scopedOf(this).resolveArnRef(ref, resolver);
     }
 }
