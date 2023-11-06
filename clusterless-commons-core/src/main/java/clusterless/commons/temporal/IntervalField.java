@@ -24,10 +24,25 @@ import static java.time.temporal.ChronoUnit.DAYS;
  * Mostly copied from {@link ChronoField} adding support for new IntervalUnits.
  */
 public enum IntervalField implements TemporalField {
+    /**
+     * The fourth-of-day.
+     * <p>
+     * This counts the quarter of an hour within the day, from 0 to 24 * 60 / 15.
+     */
     FOURTH_OF_DAY("FourthOfDay", IntervalUnit.FOURTHS, DAYS, ValueRange.of(0, 24 * 60 / 15)),
 
+    /**
+     * The sixth-of-day.
+     * <p>
+     * This counts the sixths of an hour within the day, from 0 to 24 * 60 / 10.
+     */
     SIXTH_OF_DAY("SixthOfDay", IntervalUnit.SIXTHS, DAYS, ValueRange.of(0, 24 * 60 / 10)),
 
+    /**
+     * The twelfth-of-day.
+     * <p>
+     * This counts the twelfths of an hour within the day, from 0 to 24 * 60 / 5.
+     */
     TWELFTH_OF_DAY("TwelfthOfDay", IntervalUnit.TWELFTHS, DAYS, ValueRange.of(0, 24 * 60 / 5));
 
     private final String name;
