@@ -12,6 +12,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalUnit;
 import java.util.Locale;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Utility class for looking up a formatter given a unit, or a unit given a name.
@@ -25,6 +27,7 @@ public class IntervalUnits {
      * @throws IllegalArgumentException if the given unit does not have an associated formatter
      */
     public static void verifyHasFormatter(TemporalUnit unit) {
+        //noinspection ResultOfMethodCallIgnored
         formatter(unit);
     }
 
@@ -57,13 +60,36 @@ public class IntervalUnits {
      * @throws IllegalArgumentException if the named unit is not found
      */
     public static TemporalUnit find(String name) {
-        Enum<?> unit;
+        Objects.requireNonNull(name, "name");
+
         try {
-            unit = ChronoUnit.valueOf(name.toUpperCase(Locale.ROOT));
+            return ChronoUnit.valueOf(name.toUpperCase(Locale.ROOT));
         } catch (IllegalArgumentException e) {
-            unit = IntervalUnit.valueOf(name.toUpperCase(Locale.ROOT));
+            return IntervalUnit.valueOf(name.toUpperCase(Locale.ROOT));
+        }
+    }
+
+    /**
+     * Given a string with an embedded duration, find the TemporalUnit associated with that duration.
+     *
+     * @param string with an embedded duration
+     * @return TemporalUnit or null
+     */
+    public static Optional<TemporalUnit> findDurationWithin(String string) {
+        Objects.requireNonNull(string, "string");
+
+        for (IntervalUnit value : IntervalUnit.values()) {
+            if (string.contains(value.getDuration().toString())) {
+                return Optional.of(value);
+            }
         }
 
-        return (TemporalUnit) unit;
+        for (ChronoUnit value : ChronoUnit.values()) {
+            if (string.contains(value.getDuration().toString())) {
+                return Optional.of(value);
+            }
+        }
+
+        return Optional.empty();
     }
 }
