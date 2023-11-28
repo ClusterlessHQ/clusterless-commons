@@ -55,7 +55,7 @@ public class ScopedConstruct extends Construct {
 
     protected void addArnRefFor(Ref ref, Construct construct, String value, String description) {
         ScopedStack.scopedOf(this)
-                .addArnRef(ref, construct, value, description);
+                .addArnRefFor(ref, construct, value, description);
     }
 
     protected void addIdRefFor(Ref ref, Construct construct, String value, String description) {

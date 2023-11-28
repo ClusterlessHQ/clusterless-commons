@@ -133,11 +133,11 @@ public class ScopedStack extends Stack {
         }
     }
 
-    protected void addArnRef(Ref ref, String value, String description) {
-        addArnRef(ref, null, value, description);
+    protected void addArnRefFor(Ref ref, String value, String description) {
+        addArnRefFor(ref, null, value, description);
     }
 
-    public void addArnRef(Ref ref, Construct construct, String value, String description) {
+    public void addArnRefFor(Ref ref, Construct construct, String value, String description) {
         Ref.Qualifier qualifier = Ref.Qualifier.Arn;
         Ref qualifiedRef = withContext(ref).withQualifier(qualifier);
 
@@ -153,10 +153,28 @@ public class ScopedStack extends Stack {
         }
     }
 
+    /**
+     * Adds `aws` and the current stage to the given ref.
+     *
+     * @param ref the ref
+     * @return the ref with `aws` and the current stage
+     */
     protected Ref withContext(Ref ref) {
         return ref
                 .withProvider("aws")
                 .withStage(stage());
+    }
+
+    /**
+     * Adds the scoped name and version to the given ref.
+     *
+     * @param ref the ref
+     * @return the ref with the scoped name and version
+     */
+    protected Ref withScope(Ref ref) {
+        return ref
+                .withScope(scopedName())
+                .withScopeVersion(scopedVersion());
     }
 
     public <T extends Construct> Stream<T> findHaving(Class<T> type) {
