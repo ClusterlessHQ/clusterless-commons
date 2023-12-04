@@ -67,16 +67,16 @@ public class ScopedApp extends App {
         return scopedMeta;
     }
 
-    public void addRef(Ref ref, Construct construct) {
+    public void addLocalConstruct(Ref ref, Construct construct) {
         refConstructs.put(ref, construct);
     }
 
-    public Construct resolveRef(Ref ref) {
+    public Construct getLocalConstruct(Ref ref) {
         return refConstructs.get(ref);
     }
 
-    public <T> T resolveArnRef(String ref, Function<String, T> resolver) {
-        Construct construct = resolveRef(ref);
+    public <T> T importArnRef(String ref, Function<String, T> resolver) {
+        Construct construct = resolveLocalConstruct(ref);
 
         if (construct != null) {
             return (T) construct;
@@ -87,7 +87,7 @@ public class ScopedApp extends App {
         return resolver.apply(arn.orElseThrow(() -> new IllegalArgumentException("ref or arn are required" + ref)));
     }
 
-    public Construct resolveRef(String relativeTypeRef) {
+    public Construct resolveLocalConstruct(String relativeTypeRef) {
         Objects.requireNonNull(relativeTypeRef, "relativeTypeRef must not be null");
 
         String[] split = relativeTypeRef.split(":");

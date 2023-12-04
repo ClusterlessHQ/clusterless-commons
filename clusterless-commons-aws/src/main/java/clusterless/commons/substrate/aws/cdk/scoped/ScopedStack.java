@@ -81,11 +81,11 @@ public class ScopedStack extends Stack {
         return ScopedApp.scopedOf(this).version();
     }
 
-    protected void addNameRefFor(Ref ref, String value, String description) {
-        addNameRefFor(ref, null, value, description);
+    protected void exportNameRefFor(Ref ref, String value, String description) {
+        exportNameRefFor(ref, null, value, description);
     }
 
-    public void addNameRefFor(Ref ref, Construct construct, String value, String description) {
+    public void exportNameRefFor(Ref ref, Construct construct, String value, String description) {
         Ref.Qualifier qualifier = Ref.Qualifier.Name;
         Ref qualifiedRef = withContext(ref).withQualifier(qualifier);
 
@@ -103,15 +103,15 @@ public class ScopedStack extends Stack {
 
         if (construct != null) {
             ScopedApp.scopedOf(this)
-                    .addRef(qualifiedRef, construct);
+                    .addLocalConstruct(qualifiedRef, construct);
         }
     }
 
-    protected void addIdRefFor(Ref ref, String value, String description) {
-        addIdRefFor(ref, null, value, description);
+    protected void exportIdRefFor(Ref ref, String value, String description) {
+        exportIdRefFor(ref, null, value, description);
     }
 
-    public void addIdRefFor(Ref ref, Construct construct, String value, String description) {
+    public void exportIdRefFor(Ref ref, Construct construct, String value, String description) {
         Ref.Qualifier qualifier = Ref.Qualifier.Id;
         Ref qualifiedRef = withContext(ref).withQualifier(qualifier);
 
@@ -129,15 +129,15 @@ public class ScopedStack extends Stack {
 
         if (construct != null) {
             ScopedApp.scopedOf(this)
-                    .addRef(qualifiedRef, construct);
+                    .addLocalConstruct(qualifiedRef, construct);
         }
     }
 
-    protected void addArnRefFor(Ref ref, String value, String description) {
-        addArnRefFor(ref, null, value, description);
+    protected void exportArnRefFor(Ref ref, String value, String description) {
+        exportArnRefFor(ref, null, value, description);
     }
 
-    public void addArnRefFor(Ref ref, Construct construct, String value, String description) {
+    public void exportArnRefFor(Ref ref, Construct construct, String value, String description) {
         Ref.Qualifier qualifier = Ref.Qualifier.Arn;
         Ref qualifiedRef = withContext(ref).withQualifier(qualifier);
 
@@ -149,7 +149,7 @@ public class ScopedStack extends Stack {
 
         if (construct != null) {
             ScopedApp.scopedOf(this)
-                    .addRef(qualifiedRef, construct);
+                    .addLocalConstruct(qualifiedRef, construct);
         }
     }
 

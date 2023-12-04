@@ -53,21 +53,54 @@ public class ScopedConstruct extends Construct {
         return ScopedApp.scopedOf(this).version();
     }
 
-    protected void addArnRefFor(Ref ref, Construct construct, String value, String description) {
+    /**
+     * Exports the given arn for the construct under the {@link Ref} name.
+     *
+     * @param ref         the {@link Ref} to use as the name
+     * @param construct   the construct to export
+     * @param arn         the arn to export
+     * @param description the description of the export
+     */
+    protected void exportArnRefFor(Ref ref, Construct construct, String arn, String description) {
         ScopedStack.scopedOf(this)
-                .addArnRefFor(ref, construct, value, description);
+                .exportArnRefFor(ref, construct, arn, description);
     }
 
-    protected void addIdRefFor(Ref ref, Construct construct, String value, String description) {
-        ScopedStack.scopedOf(this).addIdRefFor(ref, construct, value, description);
+    /**
+     * Exports the given id for the construct under the {@link Ref} name.
+     *
+     * @param ref         the {@link Ref} to use as the name
+     * @param construct   the construct to export
+     * @param id          the id to export
+     * @param description the description of the export
+     */
+    protected void exportIdRefFor(Ref ref, Construct construct, String id, String description) {
+        ScopedStack.scopedOf(this).exportIdRefFor(ref, construct, id, description);
     }
 
-    protected void addNameRefFor(Ref ref, Construct construct, String value, String description) {
+    /**
+     * Exports the given name for the construct under the {@link Ref} name.
+     *
+     * @param ref         the {@link Ref} to use as the name
+     * @param construct   the construct to export
+     * @param name        the name to export
+     * @param description the description of the export
+     */
+    protected void exportNameRefFor(Ref ref, Construct construct, String name, String description) {
         ScopedStack.scopedOf(this)
-                .addNameRefFor(ref, construct, value, description);
+                .exportNameRefFor(ref, construct, name, description);
     }
 
-    protected <T> T resolveArnRef(String ref, Function<String, T> resolver) {
-        return ScopedApp.scopedOf(this).resolveArnRef(ref, resolver);
+    /**
+     * Import the arn value represented by the given {@link Ref} and return the resolved value.
+     *
+     * @param ref      the {@link Ref} to resolve
+     * @param resolver the resolver to use to resolve the value
+     * @param <T>      the type of the resolved value, usually a Construct
+     * @return the resolved value, usually a Construct
+     */
+    protected <T> T importArnRef(String ref, Function<String, T> resolver) {
+        return ScopedApp.scopedOf(this)
+                .importArnRef(ref, resolver);
     }
 }
