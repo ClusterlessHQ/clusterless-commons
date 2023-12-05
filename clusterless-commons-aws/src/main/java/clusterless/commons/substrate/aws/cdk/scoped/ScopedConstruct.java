@@ -103,4 +103,18 @@ public class ScopedConstruct extends Construct {
         return ScopedApp.scopedOf(this)
                 .importArnRef(ref, resolver);
     }
+
+    /**
+     * Resolve a local construct from a relative type ref.
+     *
+     * @param relativeTypeRef the relative type ref
+     * @param <T>             the type of the resolved construct
+     * @return the resolved construct
+     */
+    protected <T extends Construct> T resolveLocalConstruct(String relativeTypeRef) {
+        Construct construct = ScopedApp.scopedOf(this)
+                .resolveLocalConstruct(relativeTypeRef);
+
+        return (T) construct;
+    }
 }

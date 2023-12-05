@@ -87,7 +87,14 @@ public class ScopedApp extends App {
         return resolver.apply(arn.orElseThrow(() -> new IllegalArgumentException("ref or arn are required" + ref)));
     }
 
-    public Construct resolveLocalConstruct(String relativeTypeRef) {
+    /**
+     * Resolve a local construct from a relative type ref.
+     *
+     * @param relativeTypeRef the relative type ref
+     * @param <T>             the type of the construct
+     * @return the construct
+     */
+    public <T extends Construct> T resolveLocalConstruct(String relativeTypeRef) {
         Objects.requireNonNull(relativeTypeRef, "relativeTypeRef must not be null");
 
         String[] split = relativeTypeRef.split(":");
@@ -113,7 +120,7 @@ public class ScopedApp extends App {
         }
 
         if (results.size() == 1) {
-            return results.stream().findFirst().get().getValue();
+            return (T) results.stream().findFirst().get().getValue();
         }
 
         if (resourceType == null) {
@@ -130,7 +137,7 @@ public class ScopedApp extends App {
         }
 
         if (results.size() == 1) {
-            return results.stream().findFirst().get().getValue();
+            return (T) results.stream().findFirst().get().getValue();
         }
 
         if (resourceNs == null) {
@@ -147,7 +154,7 @@ public class ScopedApp extends App {
         }
 
         if (results.size() == 1) {
-            return results.stream().findFirst().get().getValue();
+            return (T) results.stream().findFirst().get().getValue();
         }
 
         if (provider == null) {
@@ -160,7 +167,7 @@ public class ScopedApp extends App {
                 .collect(Collectors.toSet());
 
         if (results.size() == 1) {
-            return results.stream().findFirst().get().getValue();
+            return (T) results.stream().findFirst().get().getValue();
         }
 
         throw new IllegalArgumentException("no constructs found for: " + relativeTypeRef + ", available: " + refConstructs.keySet());

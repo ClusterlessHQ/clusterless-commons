@@ -59,11 +59,11 @@ public class ArnRefs {
 
     /**
      * Given an arn or stringified {@link Ref}, return the arn.
-     * <p/>
+     * <p>
      * If the given value is a Ref, the arn will be imported.
      *
      * @param value the value to check
-     * @return
+     * @return the arn
      */
     public static Optional<String> arnFor(String value) {
         Objects.requireNonNull(value, "value must not be null");
