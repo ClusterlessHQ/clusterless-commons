@@ -122,10 +122,9 @@ public class ResourceNames {
         Label region = Region.of(Stack.of(scope).getRegion());
         Label stage = ScopedApp.scopedOf(scope).stage();
 
-        Label result = stage.upperOnly()
+        return stage.upperOnly()
                 .with(name)
                 .with(region);
-        return result;
     }
 
     /**
@@ -170,6 +169,17 @@ public class ResourceNames {
      */
     public static String regionUniqueName(Construct scope, String name) {
         return regionUniqueLabel(scope, Label.of(name), null).lowerHyphen();
+    }
+
+    /**
+     * Returns a region unique {@link Label} for the given scope and name.
+     *
+     * @param scope the scope
+     * @param name  the name
+     * @return a region unique {@link Label}
+     */
+    public static Label regionUniqueLabel(Construct scope, Label name) {
+        return regionUniqueLabel(scope, name, Label.NULL);
     }
 
     /**
