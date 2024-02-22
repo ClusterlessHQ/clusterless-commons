@@ -268,6 +268,11 @@ public interface Label {
             }
 
             @Override
+            public String camelCasePath() {
+                return String.format("%s/%s", Label.this.camelCasePath(), label.camelCasePath());
+            }
+
+            @Override
             public String lowerHyphen() {
                 return String.format("%s-%s", Label.this.lowerHyphen(), label.lowerHyphen());
             }
@@ -360,6 +365,15 @@ public interface Label {
      */
     default String lowerCamelCase() {
         return Strings.camelToLowerCamel(camelCase());
+    }
+
+    /**
+     * Returns a camel case formatted String with slash delimiters.
+     *
+     * @return a camel case formatted String with slash delimiters
+     */
+    default String camelCasePath() {
+        return camelCase();
     }
 
     /**

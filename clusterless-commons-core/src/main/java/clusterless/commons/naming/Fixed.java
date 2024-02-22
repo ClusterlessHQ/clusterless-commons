@@ -53,6 +53,11 @@ public class Fixed implements Label, Serializable {
     }
 
     @Override
+    public String camelCasePath() {
+        return value();
+    }
+
+    @Override
     public String lowerHyphenPath() {
         return value();
     }
