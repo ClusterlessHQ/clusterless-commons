@@ -70,6 +70,20 @@ public class IntervalUnits {
     }
 
     /**
+     * Finds a TemporalUnit with the given name.
+     *
+     * @param name - of a TemporaUnit
+     * @return Optional of TemporalUnit
+     */
+    public static Optional<TemporalUnit> findSafe(String name) {
+        try {
+            return Optional.of(find(name));
+        } catch (IllegalArgumentException e) {
+            return Optional.empty();
+        }
+    }
+
+    /**
      * Given a string with an embedded duration, find the TemporalUnit associated with that duration.
      *
      * @param string with an embedded duration
