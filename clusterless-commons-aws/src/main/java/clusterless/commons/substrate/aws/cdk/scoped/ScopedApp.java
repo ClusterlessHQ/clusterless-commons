@@ -76,10 +76,14 @@ public class ScopedApp extends App {
     }
 
     public <T> T importArnRef(String ref, Function<String, T> resolver) {
-        Construct construct = resolveLocalConstruct(ref);
+        try {
+            Construct construct = resolveLocalConstruct(ref);
 
-        if (construct != null) {
-            return (T) construct;
+            if (construct != null) {
+                return (T) construct;
+            }
+        } catch (IllegalStateException e) {
+            // ignore
         }
 
         Optional<String> arn = ArnRefs.resolveArn(this, ref);
