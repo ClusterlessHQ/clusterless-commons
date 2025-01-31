@@ -14,9 +14,9 @@ dependencies {
     implementation(project(":clusterless-commons-core"))
 
     // https://mvnrepository.com/artifact/software.amazon.awscdk/aws-cdk-lib
-    val cdkVersion = "2.110.1"
+    val cdkVersion = "2.177.0"
     api("software.amazon.awscdk:aws-cdk-lib:$cdkVersion")
     // https://mvnrepository.com/artifact/software.constructs/constructs
-    val constructsVersion = "10.3.0"
+    val constructsVersion = "10.4.2"
     api("software.constructs:constructs:$constructsVersion")
 }
