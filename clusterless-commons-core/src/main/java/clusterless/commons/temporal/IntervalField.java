@@ -19,11 +19,26 @@ import java.util.Map;
 import java.util.Objects;
 
 import static java.time.temporal.ChronoUnit.DAYS;
+import static java.time.temporal.ChronoUnit.YEARS;
 
 /**
  * Mostly copied from {@link ChronoField} adding support for new IntervalUnits.
  */
 public enum IntervalField implements TemporalField {
+    /**
+     * The day.
+     * <p>
+     * This represents the actual day only.
+     */
+    DAY("Day", IntervalUnit.DAY, YEARS, ValueRange.of(0, 365)),
+
+    /**
+     * The hour-of-day.
+     * <p>
+     * This counts the full hour within the day, from 0 to 24 * 60.
+     */
+    HOUR_OF_DAY("HourOfDay", IntervalUnit.HOURS, DAYS, ValueRange.of(0, 24 * 60)),
+
     /**
      * The fourth-of-day.
      * <p>

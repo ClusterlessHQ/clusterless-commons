@@ -39,6 +39,12 @@ public class IntervalUnits {
      * @throws IllegalArgumentException if the given unit does not have an associated formatter
      */
     public static DateTimeFormatter formatter(TemporalUnit unit) {
+        if (unit == IntervalUnit.DAY) {
+            return IntervalDateTimeFormatter.DAY_FORMATTER;
+        }
+        if (unit == IntervalUnit.HOURS) {
+            return IntervalDateTimeFormatter.HOUR_FORMATTER;
+        }
         if (unit == IntervalUnit.FOURTHS) {
             return IntervalDateTimeFormatter.FOURTH_FORMATTER;
         }
@@ -63,9 +69,9 @@ public class IntervalUnits {
         Objects.requireNonNull(name, "name");
 
         try {
-            return ChronoUnit.valueOf(name.toUpperCase(Locale.ROOT));
-        } catch (IllegalArgumentException e) {
             return IntervalUnit.valueOf(name.toUpperCase(Locale.ROOT));
+        } catch (IllegalArgumentException e) {
+            return ChronoUnit.valueOf(name.toUpperCase(Locale.ROOT));
         }
     }
 

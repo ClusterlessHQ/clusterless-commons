@@ -14,17 +14,47 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.TemporalUnit;
 
 import static clusterless.commons.temporal.IntervalField.*;
+import static clusterless.commons.temporal.IntervalField.HOUR_OF_DAY;
 import static java.time.temporal.ChronoField.*;
 
 /**
  * IntervalDateTimeFormatter provided formatters for the {@link IntervalUnit} units.
- *
+ * <p>
  * See {@link IntervalUnits#formatter(TemporalUnit)} for looking up an appropriate formatter.
  */
 public class IntervalDateTimeFormatter {
+    public static final DateTimeFormatter DAY_FORMATTER;
+    public static final DateTimeFormatter HOUR_FORMATTER;
     public static final DateTimeFormatter FOURTH_FORMATTER;
     public static final DateTimeFormatter SIXTH_FORMATTER;
     public static final DateTimeFormatter TWELFTH_FORMATTER;
+
+    static {
+        DAY_FORMATTER = new DateTimeFormatterBuilder()
+                .parseStrict()
+                .appendValue(YEAR, 4)
+                .appendValue(MONTH_OF_YEAR, 2)
+                .appendValue(DAY_OF_MONTH, 2)
+                .appendLiteral(DAY.getBaseUnit().getDuration().toString())
+                // ensure that the TemporalAccessor is set to midnight
+                .parseDefaulting(HOUR_OF_DAY, 0)
+                .parseDefaulting(MINUTE_OF_HOUR, 0)
+                .parseDefaulting(SECOND_OF_MINUTE, 0)
+                .toFormatter()
+                .withZone(ZoneOffset.UTC);
+    }
+
+    static {
+        HOUR_FORMATTER = new DateTimeFormatterBuilder()
+                .parseStrict()
+                .appendValue(YEAR, 4)
+                .appendValue(MONTH_OF_YEAR, 2)
+                .appendValue(DAY_OF_MONTH, 2)
+                .appendLiteral(HOUR_OF_DAY.getBaseUnit().getDuration().toString())
+                .appendValue(HOUR_OF_DAY, 2)
+                .toFormatter()
+                .withZone(ZoneOffset.UTC);
+    }
 
     static {
         FOURTH_FORMATTER = new DateTimeFormatterBuilder()
@@ -33,7 +63,7 @@ public class IntervalDateTimeFormatter {
                 .appendValue(MONTH_OF_YEAR, 2)
                 .appendValue(DAY_OF_MONTH, 2)
                 .appendLiteral(FOURTH_OF_DAY.getBaseUnit().getDuration().toString())
-                .appendValue(FOURTH_OF_DAY, 3)
+                .appendValue(FOURTH_OF_DAY, 2) // max 96
                 .toFormatter()
                 .withZone(ZoneOffset.UTC);
     }

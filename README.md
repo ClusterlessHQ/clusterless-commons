@@ -25,9 +25,15 @@ The Label class is for making labels, String for use in different contexts.
 ```java
 Label id = Label.of("project").with("version");
 
-id.camelCase(); // projectVersion
-id.lowerHyphen(); // project-version
-id.lowerColonPath(); // project:version
+id.
+
+camelCase(); // projectVersion
+id.
+
+lowerHyphen(); // project-version
+id.
+
+lowerColonPath(); // project:version
 ```
 
 There are a few flavors of Label:
@@ -65,15 +71,20 @@ class provides a way to create Refs for child resources of the construct.
 Provides [IntervalUnit](clusterless-commons-core/src/main/java/clusterless/commons/temporal/IntervalUnit.java)
 implementations of:
 
-- Fourths - 15 minute intervals
-- Sixths - 10 minute intervals
-- Twelfths - 5 minute intervals
-
-These intervals are used by Clusterless to label lots.
+- Day - the day interval - `20230206PT24H`
+- Hours - 60 minute intervals within a day (24 intervals) - `20230206PT1H23`
+- Fourths - 15 minute intervals within a day (96 intervals) - `20230206PT15M92`
+- Sixths - 10 minute intervals within a day (144 intervals) - `20230206PT10M138`
+- Twelfths - 5 minute intervals within a day (288 intervals) - `20230206PT5M276`
 
 There is also a
 [IntervalDateTimeFormatter](clusterless-commons-core/src/main/java/clusterless/commons/temporal/IntervalDateTimeFormatter.java)
-for formatting dates and times of these intervals.
+for formatting and parsing of the dates and times these intervals represent. See above for examples.
+
+These intervals are used by Clusterless to label the execution of a batch job (or lot).
+
+For continuously arriving data, the lexical order of the jobs by the formatted interval string makes it trivial to
+identify gaps and reason about how long the batch accumulated data before execution.
 
 ### Collection
 

@@ -9,14 +9,16 @@
 package clusterless.commons.temporal;
 
 import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.Temporal;
 import java.time.temporal.TemporalUnit;
 
 import static java.time.temporal.ChronoField.MINUTE_OF_DAY;
-import static java.time.temporal.ChronoUnit.MINUTES;
 
 /**
  * Breaks a day into the number of intervals requested.
+ * <p>
+ * Day is the actual day as an interval where the day component is of the month.
  * <p/>
  * Fourths is a 15-minute duration, there are 4 Fourths in an hour, and 96 Fourths in a day.
  * <p/>
@@ -25,6 +27,8 @@ import static java.time.temporal.ChronoUnit.MINUTES;
  * Twelfths is a 5-minute duration, there are 12 Twelfths in an hour, and 288 Twelfth in a day.
  */
 public enum IntervalUnit implements TemporalUnit {
+    DAY("Day", Duration.ofDays(1)),
+    HOURS("Hours", Duration.ofHours(1)),
     FOURTHS("Fourths", Duration.ofMinutes(15)),
     SIXTHS("Sixths", Duration.ofMinutes(10)),
     TWELFTHS("Twelfths", Duration.ofMinutes(5));
@@ -66,12 +70,16 @@ public enum IntervalUnit implements TemporalUnit {
     @Override
     public <R extends Temporal> R addTo(R temporal, long amount) {
         switch (this) {
+            case DAY:
+                return (R) temporal.plus(amount, ChronoUnit.DAYS);
+            case HOURS:
+                return (R) temporal.plus(amount, ChronoUnit.HOURS);
             case FOURTHS:
-                return (R) temporal.plus(15 * amount, MINUTES);
+                return (R) temporal.plus(15 * amount, ChronoUnit.MINUTES);
             case SIXTHS:
-                return (R) temporal.plus(10 * amount, MINUTES);
+                return (R) temporal.plus(10 * amount, ChronoUnit.MINUTES);
             case TWELFTHS:
-                return (R) temporal.plus(5 * amount, MINUTES);
+                return (R) temporal.plus(5 * amount, ChronoUnit.MINUTES);
             default:
                 throw new IllegalArgumentException();
         }
@@ -83,12 +91,16 @@ public enum IntervalUnit implements TemporalUnit {
             return temporal1Inclusive.until(temporal2Exclusive, this);
         }
         switch (this) {
+            case DAY:
+                return temporal1Inclusive.until(temporal2Exclusive, ChronoUnit.DAYS);
+            case HOURS:
+                return temporal1Inclusive.until(temporal2Exclusive, ChronoUnit.HOURS);
             case FOURTHS:
-                return temporal1Inclusive.until(temporal2Exclusive, MINUTES) / 15;
+                return temporal1Inclusive.until(temporal2Exclusive, ChronoUnit.MINUTES) / 15;
             case SIXTHS:
-                return temporal1Inclusive.until(temporal2Exclusive, MINUTES) / 10;
+                return temporal1Inclusive.until(temporal2Exclusive, ChronoUnit.MINUTES) / 10;
             case TWELFTHS:
-                return temporal1Inclusive.until(temporal2Exclusive, MINUTES) / 5;
+                return temporal1Inclusive.until(temporal2Exclusive, ChronoUnit.MINUTES) / 5;
             default:
                 throw new IllegalArgumentException();
         }
